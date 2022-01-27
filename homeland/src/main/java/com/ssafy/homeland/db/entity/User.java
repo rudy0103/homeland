@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 /**
  * 유저 모델 정의.
@@ -15,10 +16,11 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class User extends BaseEntity{
-    String authority;
-    String email;
-    String nickname;
-    String userId;
+    private String authority;
+    private String email;
+    private String nickname;
+    private String userId;
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
