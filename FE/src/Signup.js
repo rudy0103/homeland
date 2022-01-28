@@ -29,8 +29,11 @@ function Sign() {
 
   const onSubmit = () => {
     if (password && password === passwordConfirm) {
-      fetch("#", {
+      fetch("http://localhost:8080/api/v1/users", {
         method: "POST",
+         headers: {
+         "Content-Type": "application/json",
+          },
         body: JSON.stringify({
           id: id,
           nickname: nickname,
@@ -38,11 +41,11 @@ function Sign() {
           email: email,
         }),
       })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          return <Redirect to="/login" />;
-        })
+        .then((res) => console.log(res))
+//        .then((res) => {
+//          console.log(res);
+//          return <Redirect to="/login" />;
+//        })
         .catch((err) => {
           console.log(err);
         });
