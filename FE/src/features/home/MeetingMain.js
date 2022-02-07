@@ -694,11 +694,7 @@ class Main extends Component {
     document.body.removeChild(link);
     setTimeout(() => {
       this.closeModal();
-<<<<<<< HEAD
-    }, 2000);
-=======
     }, 500);
->>>>>>> chatroom
   }
 }
 
