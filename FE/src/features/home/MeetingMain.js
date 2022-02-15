@@ -96,9 +96,21 @@ class Main extends Component {
     this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
     // 짠효과
     this.cheersToggle = this.cheersToggle.bind(this);
+    // 방장나가기 방폭파
+    this.pubOut = this.pubOut.bind(this);
+
+
+  }
+
+  pubOut() {
+    setTimeout(() => {
+      this.leaveSession();
+    }, 1000);
   }
 
   cheersToggle() {
+    // this.leaveSession();
+    // this.sendPubOut()
     this.setState({ cheers: !this.state.cheers });
     setTimeout(() => {
       this.setState({ cheers: !this.state.cheers });
@@ -134,6 +146,7 @@ class Main extends Component {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
     }
+    
     this.showVideoControls();
   }
 
@@ -214,6 +227,16 @@ class Main extends Component {
       data: "start cheers",
       to: [],
       type: "cheersSignal",
+    });
+  }
+
+  sendPubOut() {
+    const mySession = this.state.session;
+
+    mySession.signal({
+      data: "out put",
+      to: [],
+      type: "putOut",
     });
   }
 
@@ -338,6 +361,9 @@ class Main extends Component {
         // --- 3) Specify the actions when events take place in the session ---
         mySession.on("connectionCreated", (event) => {
           console.log("connection");
+
+
+
           console.log(event.connection);
           // var connection = event.connection.connectionId
           // Object형을 넣어줘야한다.
@@ -348,6 +374,22 @@ class Main extends Component {
           this.setState({
             connectionUser: connectionUser,
           });
+          // 코넥션 오브젝트 모음 체크
+          var test = this.state.connectionUser
+          var sessionData = this.state.sessionData
+          var connections = this.state.connections
+          console.log('코넥션 오브젝트')
+          console.log(test)
+          console.log('세션데이타')
+          console.log(sessionData)
+
+          console.log('코넥션즈')
+          console.log(connections)
+
+
+          // pub테스트
+          var tp = this.state.publisher
+          console.log(tp)
         });
         // On every new Stream received...
         mySession.on("streamCreated", (event) => {
@@ -385,10 +427,15 @@ class Main extends Component {
         mySession.on("signal:cheersSignal", (event) => {
           this.cheersToggle();
         });
+        // 방장 나가기
+        mySession.on("signal:putOut", (event) => {
+          this.pubOut();
+        });
 
         // On every Stream destroyed...
         mySession.on("streamDestroyed", (event) => {
           // Remove the stream from 'subscribers' array
+          
           this.deleteSubscriber(event.stream.streamManager);
         });
 
@@ -448,10 +495,18 @@ class Main extends Component {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
     const mySession = this.state.session;
+    
     // 세션 나가면 app.js에 false값 전달 => navbar 토글 위함
     const onIsSession = this.props.onIsSession;
     onIsSession(false);
-
+    console.log('======나가는놈누구냐=======')
+    console.log(mySession)
+    console.log(onIsSession)
+    // mySession.connection.connectionId == this.state.connectionUser[0].connectionId
+    if(mySession.connection.connectionId == this.state.connectionUser[0].connectionId){
+      // 여기찐
+      this.sendPubOut()
+    }
     if (mySession) {
       mySession.disconnect();
     }
@@ -479,6 +534,13 @@ class Main extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
     });
+    // 아.. this.setState까지만햇다. 이거를 어디다가 둬야하지
+    // if (this.setState.publisher === undefined){
+    //   console.log('방장이나갔습니다!!22')
+    //   this.sendPubOut()
+    // }
+    // 여기서, 방장이 leaveSession 이거면 모두에게  나가게
+    // this.leaveSession();을 전송하게 ㅇㅇ!
   }
 
   render() {
@@ -774,7 +836,8 @@ class Main extends Component {
                     className="video-container "
                     id="capture_screen"
                   >
-                    {this.state.publisher !== undefined ? (
+                    {this.state.publisher !== undefined 
+                    ? (
                       <div
                         // className="stream-container-v1"
                         className={
@@ -790,7 +853,11 @@ class Main extends Component {
                           streamManager={this.state.publisher}
                         />
                       </div>
-                    ) : null}
+                    ) 
+                    : null
+                    }
+                    {/* this.leaveSession(); 방장나가면 바로함수안되나. */}
+                    {/* 여기 null에서 전부 퇴장하게 세션 보내도될듯? */}
                     {this.state.subscribers.map((sub, i) => (
                       <div
                         key={i}
