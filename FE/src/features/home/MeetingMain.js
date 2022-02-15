@@ -109,8 +109,7 @@ class Main extends Component {
   }
 
   cheersToggle() {
-    // this.leaveSession();
-    // this.sendPubOut()
+
     this.setState({ cheers: !this.state.cheers });
     setTimeout(() => {
       this.setState({ cheers: !this.state.cheers });
@@ -499,10 +498,11 @@ class Main extends Component {
     // 세션 나가면 app.js에 false값 전달 => navbar 토글 위함
     const onIsSession = this.props.onIsSession;
     onIsSession(false);
-    console.log('======나가는놈누구냐=======')
-    console.log(mySession)
-    console.log(onIsSession)
+    // console.log('======나가는놈누구냐=======')
+    // console.log(mySession)
+    // console.log(onIsSession)
     // mySession.connection.connectionId == this.state.connectionUser[0].connectionId
+    // 방장나가면 방폭파, 이거 조정해서 버그수정도가능할듯
     if(mySession.connection.connectionId == this.state.connectionUser[0].connectionId){
       // 여기찐
       this.sendPubOut()
@@ -534,13 +534,7 @@ class Main extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
     });
-    // 아.. this.setState까지만햇다. 이거를 어디다가 둬야하지
-    // if (this.setState.publisher === undefined){
-    //   console.log('방장이나갔습니다!!22')
-    //   this.sendPubOut()
-    // }
-    // 여기서, 방장이 leaveSession 이거면 모두에게  나가게
-    // this.leaveSession();을 전송하게 ㅇㅇ!
+
   }
 
   render() {
