@@ -77,6 +77,7 @@ class Main extends Component {
       gamePanel: false,
       isRandomAllowed: true,
       cheers: false,
+      
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -369,14 +370,24 @@ class Main extends Component {
           var connection = event.connection;
           var connectionUser = this.state.connectionUser;
           connectionUser.push(connection);
+          
           //Update
           this.setState({
             connectionUser: connectionUser,
           });
+
+          
+          
+
+
+
+
           // 코넥션 오브젝트 모음 체크
           var test = this.state.connectionUser
           var sessionData = this.state.sessionData
           var connections = this.state.connections
+          var subscribers = this.state.subscribers
+          // var superman = this.state.superman
           console.log('코넥션 오브젝트')
           console.log(test)
           console.log('세션데이타')
@@ -384,6 +395,8 @@ class Main extends Component {
 
           console.log('코넥션즈')
           console.log(connections)
+        
+
 
 
           // pub테스트
@@ -504,7 +517,7 @@ class Main extends Component {
     // mySession.connection.connectionId == this.state.connectionUser[0].connectionId
     // 방장나가면 방폭파, 이거 조정해서 버그수정도가능할듯
     if(mySession.connection.connectionId == this.state.connectionUser[0].connectionId){
-      // 여기찐
+      // 여기찐,여기아니면 creation time여차하면 그걸로 비교해도될듯
       this.sendPubOut()
     }
     if (mySession) {
@@ -846,6 +859,7 @@ class Main extends Component {
                         <UserVideoComponent
                           streamManager={this.state.publisher}
                         />
+                        
                       </div>
                     ) 
                     : null
