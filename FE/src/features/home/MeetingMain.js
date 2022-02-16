@@ -859,7 +859,10 @@ class Main extends Component {
                         <UserVideoComponent
                           streamManager={this.state.publisher}
                         />
-                        
+                        {/* <h1>방장</h1> */}
+                        {this.state.cheers === true ? (
+                    <Cheersmain></Cheersmain>
+                  ) : null}
                       </div>
                     ) 
                     : null
@@ -879,8 +882,14 @@ class Main extends Component {
                         }}
                       >
                         <UserVideoComponent streamManager={sub} />
+                        {/* <h1>스크라이버</h1> */}
+                        {this.state.cheers === true ? (
+                    <Cheersmain></Cheersmain>
+                  ) : null}
                       </div>
                     ))}
+                    {/* <h1>여기테스트1</h1> */}
+                    
                   </div>
                   {/* buttons */}
 
@@ -890,9 +899,9 @@ class Main extends Component {
                   {this.state.cnt ? <CountDown /> : <span></span>}
 
                   {/* 짠효과 중앙 */}
-                  {this.state.cheers === true ? (
+                  {/* {this.state.cheers === true ? (
                     <Cheersmain></Cheersmain>
-                  ) : null}
+                  ) : null} */}
                 </Col>
 
                 <Col md={{ span: 3 }}>

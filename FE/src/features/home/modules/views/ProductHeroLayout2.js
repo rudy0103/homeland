@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import SC from './scroll3.png'
 
 const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   color: theme.palette.common.white,
@@ -12,9 +11,9 @@ const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   [theme.breakpoints.up('sm')]: {
-    height: '120vh',
-    minHeight: 500,
-    maxHeight: 1300,
+    height: '40vh',
+    minHeight: 400,
+    maxHeight: 1000,
   },
 }));
 
@@ -34,7 +33,6 @@ function ProductHeroLayout(props) {
   const { sxBackground, children } = props;
 
   return (
-    <>
     <ProductHeroLayoutRoot>
       <Container
         sx={{
@@ -67,18 +65,14 @@ function ProductHeroLayout(props) {
         <Background sx={sxBackground} />
         {/* <Box
           component="img"
-          src={SC}
-          height="8"
-          width="6"
+          src="/static/themes/onepirate/productHeroArrowDown.png"
+          height="16"
+          width="12"
           alt="arrow down"
           sx={{ position: 'absolute', bottom: 32 }}
         /> */}
-        {/* 스크롤다운넣자! */}
       </Container>
     </ProductHeroLayoutRoot>
-    </>
-          
-
   );
 }
 

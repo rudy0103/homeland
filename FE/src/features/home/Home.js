@@ -4,6 +4,9 @@ import ProductHero from "./modules/views/ProductHero";
 import ProductHero2 from "./modules/views/ProductHero2";
 import ProductHero3 from "./modules/views/ProductHero3";
 import AppFooter from "./modules/views/AppFooter"
+import Home2 from "./Home2"
+import Home3 from "./Home3"
+
 
 import withRoot from "./modules/withRoot";
 import AOS from "aos";
@@ -27,19 +30,24 @@ function Index({ onIsLogin }) {
       data-aos-duration="2000">
 
       <ProductHero />
-
       </div>
-
-      {/* <div data-aos="fade-left">
-        {" "}
-        <ProductHero2 />
+      
+<div data-aos="zoom-in"
+      data-aos-duration="2000">
+ <ProductHero2 />
       </div>
-      <div data-aos="fade-right">
-        {" "}
-        <ProductHero3 />
-      </div> */}
+     
+      <div data-aos="zoom-in"
+      data-aos-duration="2000">
+ <ProductHero3 />
+      </div>
+     
+       
+  {/* <Home2></Home2>
+      <Home3></Home3> */}
 
       {/* <AppFooter /> */}
+
     </React.Fragment>
   );
 }
