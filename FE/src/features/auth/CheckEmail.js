@@ -36,7 +36,11 @@ function CheckEmail() {
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 404) {
+          alert("E-mail을 확인해주세요.");
+        } else {
+          alert("ID를 확인해주세요.");
+        }
       });
   };
   return (
@@ -67,7 +71,6 @@ function CheckEmail() {
               placeholder="E-mail을 입력하세요."
             />
           </Form.Group>
-
           <Form.Group className="d-flex justify-content-center">
             <button
               className="btn btn-color"

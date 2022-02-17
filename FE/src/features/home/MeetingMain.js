@@ -685,9 +685,6 @@ class Main extends Component {
           },
         })
           .then((res) => {
-            console.log(this.state.myUserName);
-            console.log(this.state.connectionId);
-            console.log(res);
             if (res.status === 226) {
               alert("중복된 닉네임입니다.");
             } else {
