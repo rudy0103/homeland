@@ -36,10 +36,10 @@ function CheckEmail() {
         history.push("/");
       })
       .catch((err) => {
-        if (err.response.status === 404) {
-          alert("E-mail을 확인해주세요.");
+        if (err.response.status === 404 && err.response.data === "id-error") {
+          alert("ID을 확인해주세요.");
         } else {
-          alert("ID를 확인해주세요.");
+          alert("E-mail을 확인해주세요.");
         }
       });
   };
