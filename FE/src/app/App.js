@@ -152,7 +152,7 @@ function App() {
       <Route path="/notice-detail/:id">
         <NoticeDetailPage />
       </Route>
-      <Route path="/editProfile">
+      <Route path="/edit-profile">
         <EditProfile></EditProfile>
       </Route>
       <Route path="/edit-password">

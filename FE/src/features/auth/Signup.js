@@ -6,34 +6,96 @@ import axios from "axios";
 import backEndUrl from "../setup/hld_url";
 import { Form, Container } from "react-bootstrap";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 
 function Sign() {
   const BEUrl = backEndUrl;
   const history = useHistory();
+  // id 체크
   const [id, setId] = useState("");
   const [idError, setIdError] = useState(false);
-  const [nicknameError, setNicknameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  const [idValid, setIdValid] = useState("");
+  const [idValidFeedback, setIdValidFeedback] = useState("");
+  const [idValidMessage, setIdValidMessage] = useState("");
+
   const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [nicknameError, setNicknameError] = useState(false);
+  const [nicknameValid, setNicknameValid] = useState("");
+  const [nicknameValidFeedback, setNicknameValidFeedback] = useState("");
+  const [nicknameValidMessage, setNicknameValidMessage] = useState("");
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [emailValid, setEmailValid] = useState("");
+  const [emailValidFeedback, setEmailValidFeedback] = useState("");
+  const [emailValidMessage, setEmailValidMessage] = useState("");
+
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleId = (event) => {
     event.preventDefault();
+    const eValue = event.target.value;
+    if ((eValue && eValue.length < 3) || eValue.length > 10) {
+      setIdValid("is-invalid");
+      setIdValidFeedback("invalid-feedback");
+      setIdValidMessage("3글자 이상 10글자 이하로 입력해주세요.");
+    } else if (!eValue) {
+      setIdValid("");
+      setIdValidFeedback("");
+      setIdValidMessage("");
+    } else if (eValue && eValue.length >= 3 && eValue.length <= 10) {
+      setIdValid("is-valid");
+      setIdValidFeedback("valid-feedback");
+      setIdValidMessage("올바른 형식입니다!");
+    }
     setIdError(false);
     setId(event.target.value);
   };
+
   const handleNickname = (event) => {
     event.preventDefault();
+    const eValue = event.target.value;
+    if ((eValue && eValue.length < 3) || eValue.length > 10) {
+      setNicknameValid("is-invalid");
+      setNicknameValidFeedback("invalid-feedback");
+      setNicknameValidMessage("3글자 이상 10글자 이하로 입력해주세요.");
+    } else if (!eValue) {
+      setNicknameValid("");
+      setNicknameValidFeedback("");
+      setNicknameValidMessage("");
+    } else if (eValue && eValue.length >= 3 && eValue.length <= 10) {
+      setNicknameValid("is-valid");
+      setNicknameValidFeedback("valid-feedback");
+      setNicknameValidMessage("올바른 형식입니다!");
+    }
     setNicknameError(false);
     setNickname(event.target.value);
   };
+
+  const handleEmail = (event) => {
+    event.preventDefault();
+    const eValue = event.target.value;
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (eValue && !emailRegex.test(eValue)) {
+      setEmailValid("is-invalid");
+      setEmailValidFeedback("invalid-feedback");
+      setEmailValidMessage("올바른 E-mail 형식이 아닙니다.");
+    } else if (!eValue) {
+      setEmailValid("");
+      setEmailValidFeedback("");
+      setEmailValidMessage("");
+    } else {
+      setEmailValid("is-valid");
+      setEmailValidFeedback("valid-feedback");
+      setEmailValidMessage("올바른 형식입니다!");
+    }
+    setEmailError("");
+    setEmail(event.target.value);
+  };
+
   const handlePassword = (event) => {
     event.preventDefault();
     setPasswordError(false);
@@ -43,11 +105,6 @@ function Sign() {
     event.preventDefault();
     setPasswordConfirmError(false);
     setPasswordConfirm(event.target.value);
-  };
-  const handleEmail = (event) => {
-    event.preventDefault();
-    setEmailError("");
-    setEmail(event.target.value);
   };
 
   const onSubmit = (event) => {
@@ -114,6 +171,7 @@ function Sign() {
     if (!id) {
       alert("ID를 입력해주세요.");
       setIdError(true);
+      setIdValid("is-invalid");
     } else {
       axios({
         url: `${BEUrl}/api/v1/users/duplicate-check-id`,
@@ -138,6 +196,7 @@ function Sign() {
     event.preventDefault();
     if (!nickname) {
       setNicknameError(true);
+      setNicknameValid("is-invalid");
       alert("닉네임을 입력해주세요");
     } else {
       axios({
@@ -165,8 +224,10 @@ function Sign() {
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (email && !emailRegex.test(email)) {
       setEmailError(true);
+      setEmailValid("is-invalid");
       alert("올바른 이메일 형식이 아닙니다.");
     } else if (!email) {
+      setEmailValid("is-invalid");
       setEmailError(true);
       alert("이메일을 입력해주세요.");
     } else {
@@ -206,36 +267,48 @@ function Sign() {
             <Form.Group>
               <Form.Label className="signup-font-size">ID</Form.Label>
               <Form.Control
+                className={idValid}
                 value={id || ""}
                 onChange={handleId}
                 type="text"
                 placeholder="ID를 입력하세요."
               />
-              <div className="d-flex justify-content-end">
+              <div
+                className={`${idValidFeedback} d-flex justify-content-between`}
+              >
+                <div>{idValidMessage}</div>
                 <Button onClick={onCheckId}>ID 중복확인</Button>
               </div>
             </Form.Group>
             <Form.Group>
               <Form.Label className="signup-font-size">닉네임</Form.Label>
               <Form.Control
+                className={nicknameValid}
                 value={nickname}
                 onChange={handleNickname}
                 type="text"
                 placeholder="닉네임을 입력하세요."
               />
-              <div className="d-flex justify-content-end">
+              <div
+                className={`${nicknameValidFeedback} d-flex justify-content-between`}
+              >
+                <div>{nicknameValidMessage}</div>
                 <Button onClick={onCheckNickname}>닉네임 중복확인</Button>
               </div>
             </Form.Group>
             <Form.Group>
               <Form.Label className="signup-font-size">E-mail</Form.Label>
               <Form.Control
+                className={emailValid}
                 value={email}
                 onChange={handleEmail}
                 type="email"
                 placeholder="E-mail을 입력하세요."
               />
-              <div className="d-flex justify-content-end">
+              <div
+                className={`${emailValidFeedback} d-flex justify-content-between`}
+              >
+                <div>{emailValidMessage}</div>
                 <Button onClick={onCheckEmail}>E-mail 중복확인</Button>
               </div>
             </Form.Group>
