@@ -161,8 +161,10 @@ sudo docker build -t react_img .
 sudo docker run -it -d --network="host" --name homeland_react react_img
 ```
 
-```
-s
+컨테이너 로그 확인 하기
+
+```bash
+sudo docker logs -f homeland_react
 ```
 
 
