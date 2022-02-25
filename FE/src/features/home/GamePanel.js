@@ -462,65 +462,97 @@ function GamePanel(props) {
                           );
                         })}
                       </div>
-                      <button
-                        className="game-btn"
-                        onClick={() => {
-                          if (!isHost) {
-                            return;
-                          }
-                          signalSetLiarGameState("vote");
-                          resetDiscussionOrder();
-                        }}
-                      >
-                        재투표 하기
-                      </button>
-                      <button
-                        className="game-btn"
-                        onClick={() => {
-                          if (!isHost) {
-                            return;
-                          }
-                          signalSetLiarGameState("whoLiar");
-                        }}
-                      >
-                        라이어 확인하기
-                      </button>
+                      {isHost ? (
+                        <button
+                          className="game-btn"
+                          onClick={() => {
+                            if (!isHost) {
+                              return;
+                            }
+                            signalSetLiarGameState("vote");
+                            resetDiscussionOrder();
+                          }}
+                        >
+                          재투표 하기
+                        </button>
+                      ) : (
+                          <div style={{ marginTop: "20px" }}>  
+                          <div>
+                            <p className="liar-title">재투표를 하고 싶으신가요?</p>
+                          </div>
+                          <div style={{ marginTop: "10px" }}>
+                            <p className="liar-title">방장에게 요청해보세요!</p>
+                          </div>
+                        </div>
+                      )}
+                      {isHost ? (
+                        <button
+                          className="game-btn"
+                          onClick={() => {
+                            if (!isHost) {
+                              return;
+                            }
+                            signalSetLiarGameState("whoLiar");
+                          }}
+                        >
+                          라이어 확인하기
+                        </button>
+                      ) : (
+                        <div>
+                          <span></span>
+                        </div>
+                      )}
                     </div>
                   ),
                   whoLiar: (
                     <div>
                       <br></br>
-                      <p className="liar-title">라이어는 바로 {liar} 입니다!</p>
-                      <button
-                        className="game-btn"
-                        onClick={() => {
-                          if (!isHost) {
-                            return;
-                          }
-                          signalSetLiarGameState("whatSubject");
-                        }}
-                      >
-                        제시어 보기
-                      </button>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>라이어는</p>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>{liar}</p>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>입니다!</p>
+                      {isHost ? (
+                        <button
+                          className="game-btn"
+                          onClick={() => {
+                            if (!isHost) {
+                              return;
+                            }
+                            signalSetLiarGameState("whatSubject");
+                          }}
+                        >
+                          제시어 보기
+                        </button>
+                      ) : (
+                        <div>
+                          <span></span>
+                        </div>
+                      )}
                     </div>
                   ),
                   whatSubject: (
                     <div>
                       <br></br>
-                      <p className="liar-title">
-                        제시어는 {liarSubject}였습니다!
-                      </p>
-                      <button
-                        className="game-btn"
-                        onClick={() => {
-                          if (!isHost) {
-                            return;
-                          }
-                          signalSetLiarGameState("main");
-                        }}
-                      >
-                        라이어 게임 다시하기
-                      </button>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>제시어는</p>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>{liarSubject}</p>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>입니다!</p>
+                      <p className="liar-title" style={{ marginTop: "15px" }}>라이어는 제시어를 맞추었나요?</p>
+                      {isHost ? (
+                        <button
+                          className="game-btn"
+                          onClick={() => {
+                            if (!isHost) {
+                              return;
+                            }
+                            signalSetLiarGameState("main");
+                          }}
+                        >
+                          라이어 게임 다시하기
+                        </button>
+                      ) : (
+                        <div>
+                          <span></span>
+                        </div>
+                      )}
                     </div>
                   ),
                 }[liarGameState]

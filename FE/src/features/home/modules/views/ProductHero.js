@@ -47,22 +47,18 @@ export default function ProductHero() {
       
       </Typography>
       <Container>
-  <Row>
-    <Col></Col>
-    <Col>
-    <div className="chc">
-    <div className="ddddbox">
-<h5>    Scroll Plz~
-</h5>
-    </div>
-    </div>
-    
-    </Col>
-    <Col></Col>
-   
-  </Row>
-  
-</Container>
+        <Row>
+          <Col></Col>
+            <Col>
+              <div className="chc">
+                <div className="ddddbox">
+                  <h5>Scroll Plz~</h5>
+                </div>
+              </div>
+            </Col>
+          <Col></Col>
+        </Row>
+      </Container>
 
     </ProductHeroLayout>
   );
